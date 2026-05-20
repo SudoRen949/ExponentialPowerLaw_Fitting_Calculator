@@ -6,11 +6,11 @@ A simple calculator for calculating the exponential &amp; power-law fitting inte
 * HTML for frontend rendering
 * Python (Flask) for backend (calculation)
 
-**Instructions for installation & setup:**
+# Instructions for installation & setup:
 - Download the code
 - Extract
 - Open command prompt
-- Follow this commands
+- To run, type this command
   ```bash
   python app.py
 
