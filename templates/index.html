@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- SECTION 1: MATHEMATICAL DISCUSSION -->
+<section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
+    <h2 class="text-xl font-bold text-slate-900 border-b pb-3 mb-4 flex justify-between">1. Theoretical Mathematical Discussion</h2>
+    <p class="mb-4 leading-relaxed text-slate-600">
+        In scientific analysis, data patterns often follow non-linear scaling laws rather than linear trends. 
+        Instead of modifying the traditional least-squares equations to manage non-linear trends directly (which introduces computationally demanding, multi-variable polynomial operations), we leverage **linear transformations** using natural logarithms.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-6 mt-4">
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+            <h3 class="font-bold text-indigo-800 mb-2">Model A: Exponential Fitting $$$$ $y = ae^{bx}$ $$$$</h3>
+            <p class="text-sm mb-2 text-slate-600">Applying the natural logarithm transforms the relation into a linear format:</p>
+            <div class="bg-white p-2 rounded text-center font-mono my-2 border">
+                $$\ln(y) = \ln(a) + bx$$
+            </div>
+            <p class="text-sm text-slate-600">By mapping variables where $$$$ $Y = \ln(y), A_0 = \ln(a), A_1 = b$ $$$$ it converts into standard linear regression: $$$$ $Y = A_0 + A_1x$.</p>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+            <h3 class="font-bold text-indigo-800 mb-2">Model B: Power-Law Fitting $$$$ $y = ax^b$ $$$$</h3>
+            <p class="text-sm mb-2 text-slate-600">Applying natural logarithms to both sides yields a fully linearized system:</p>
+            <div class="bg-white p-2 rounded text-center font-mono my-2 border">
+                $$\ln(y) = \ln(a) + b\ln(x)$$
+            </div>
+            <p class="text-sm text-slate-600">By setting $$$$ $Y = \ln(y), X = \ln(x), A_0 = \ln(a)$ $$$$ we get a clean linear baseline: $$$$ $Y = A_0 + bX$.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 2: WORKED EXAMPLES (STATIC) -->
+<section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
+    <h2 class="text-xl font-bold text-slate-900 border-b pb-3 mb-4">2. Two Fully Worked Examples</h2>
+    
+    <!-- EXAMPLE 1 -->
+    <div class="mb-8 bg-slate-50/50 p-5 rounded-xl border border-slate-100">
+        <h3 class="font-bold text-lg text-slate-800 mb-3"><span class="text-indigo-600">Example 1:</span> Exponential Regression Fit $$$$ $y = ae^{bx}$ $$$$</h3>
+        <p class="text-sm mb-3">Given Data Points: $(1, 2.1), (2, 5.0), (3, 9.2)$</p>
+        
+        <div class="overflow-x-auto my-3">
+            <table class="min-w-full text-xs bg-white border border-slate-200 text-center">
+                <thead>
+                    <tr class="bg-slate-100 border-b">
+                        <th class="p-2 border-r">$$x$$</th>
+                        <th class="p-2 border-r">$$y$$</th>
+                        <th class="p-2 border-r">$$Y = \ln(y)$$</th>
+                        <th class="p-2 border-r">$$x^2$$</th>
+                        <th class="p-2">$$xY$$</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b">
+                        <td class="p-2 border-r">1</td><td class="p-2 border-r">2.1</td>
+                        <td class="p-2 border-r">0.7419</td><td class="p-2 border-r">1</td><td class="p-2">0.7419</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-2 border-r">2</td><td class="p-2 border-r">5.0</td>
+                        <td class="p-2 border-r">1.6094</td><td class="p-2 border-r">4</td><td class="p-2">3.2188</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-2 border-r">3</td><td class="p-2 border-r">9.2</td>
+                        <td class="p-2 border-r">2.2192</td><td class="p-2 border-r">9</td><td class="p-2">6.6576</td>
+                    </tr>
+                    <tr class="bg-indigo-50 font-semibold font-mono">
+                        <td class="p-2 border-r">$\sum = 6$</td><td class="p-2 border-r">-</td>
+                        <td class="p-2 border-r">$\sum = 4.5705$</td><td class="p-2 border-r">$\sum = 14$</td><td class="p-2">$\sum = 10.6183$</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+            Using Least Squares Equations: <br>
+            $$b = \frac{3(10.6183) - (6)(4.5705)}{3(14) - (6)^2} = \frac{31.8549 - 27.4230}{42 - 36} = \frac{4.4319}{6} \approx 0.73865$$ <br>
+            $$\ln(a) = \frac{4.5705 - 0.73865(6)}{3} \approx 0.0462 \implies a = e^{0.0462} \approx 1.0473$$ <br>
+            <strong>Final Form Result:</strong> $$$$ <span class="text-lg">$y = 1.0473e^{0.7387x}$</span>
+        </p>
+    </div>
+
+    <!-- EXAMPLE 2 -->
+    <div class="bg-slate-50/50 p-5 rounded-xl border border-slate-100">
+        <h3 class="font-bold text-lg text-slate-800 mb-3"><span class="text-indigo-600">Example 2:</span> Power-Law Fit Mode $$$$ $y = ax^b$ $$$$</h3>
+        <p class="text-sm mb-3">Given Data Points: $(1, 0.5), (2, 2.2), (3, 4.9)$</p>
+        
+        <div class="overflow-x-auto my-3">
+            <table class="min-w-full text-xs bg-white border border-slate-200 text-center">
+                <thead>
+                    <tr class="bg-slate-100 border-b">
+                        <th class="p-2 border-r">$$X = \ln(x)$$</th>
+                        <th class="p-2 border-r">$$Y = \ln(y)$$</th>
+                        <th class="p-2 border-r">$$X^2$$</th>
+                        <th class="p-2">$$XY$$</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b">
+                        <td class="p-2 border-r">0</td><td class="p-2 border-r">-0.6931</td>
+                        <td class="p-2 border-r">0</td><td class="p-2">-0.0000</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-2 border-r">0.6931</td><td class="p-2 border-r">0.7885</td>
+                        <td class="p-2 border-r">0.4805</td><td class="p-2">0.5465</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-2 border-r">1.0986</td><td class="p-2 border-r">1.5892</td>
+                        <td class="p-2 border-r">1.2069</td><td class="p-2">1.7459</td>
+                    </tr>
+                    <tr class="bg-indigo-50 font-semibold font-mono">
+                        <td class="p-2 border-r">$\sum = 1.7917$</td><td class="p-2 border-r">$\sum = 1.6846$</td>
+                        <td class="p-2 border-r">$\sum = 1.6874$</td><td class="p-2">$\sum = 2.2924$</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+            Applying Linearized Calculations:<br>
+            $$b = \frac{3(2.2924) - (1.7917)(1.6846)}{3(1.6874) - (1.7917)^2} = \frac{6.8772 - 3.0183}{5.0622 - 3.2102} = \frac{3.8589}{1.8520} \approx 2.0836$$ <br>
+            $$\ln(a) = \frac{1.6846 - 2.0836(1.7917)}{3} \approx -0.6830 \implies a = e^{-0.6830} \approx 0.5051$$ <br>
+            <strong>Final Form Result:</strong> $$$$ <span class="text-lg">$y = 0.5051x^{2.0836}$</span>
+        </p>
+    </div>
+</section>
+
+<!-- SECTION 3: INTERACTIVE CALCULATOR ENGINE -->
+<section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    <h2 class="text-xl font-bold text-slate-900 border-b pb-3 mb-4">3. Interactive Calculation Engine</h2>
+    
+    <form method="POST" id="calculation" class="space-y-5" action="/#calculation">
+        <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Target Fitting Model Paradigm</label>
+            <select name="fit_type" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                <option value="exponential" {% if fit_type == 'exponential' %}selected{% endif %}>Exponential Regression Model [ y = a * e^(bx) ]</option>
+                <option value="power" {% if fit_type == 'power' %}selected{% endif %}>Power-Law Distribution Model [ y = a * x^b ]</option>
+            </select>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-1">X Data Vector Matrix (Separated by Spaces or Commas)</label>
+                <input type="text" name="x_data" value="{{ raw_x }}" placeholder="e.g., 1 2 3" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm font-mono focus:ring-2 focus:ring-indigo-500 outline-none" required>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-1">Y Data Vector Matrix (Separated by Spaces or Commas)</label>
+                <input type="text" name="y_data" value="{{ raw_y }}" placeholder="e.g., 2.1 5.0 9.2" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm font-mono focus:ring-2 focus:ring-indigo-500 outline-none" required>
+            </div>
+        </div>
+
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg p-3 text-sm transition-colors shadow-sm shadow-indigo-200">
+            Compute Regression Fit Matrices
+        </button>
+    </form>
+
+    <!-- Error Prompt Display System -->
+    {% if error %}
+    <div class="mt-5 p-4 bg-red-50 border-l-4 border-red-500 rounded-md text-sm text-red-700 font-medium">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <!-- Operational Results Dashboard Matrix Display -->
+    {% if result %}
+    <div class="mt-6 p-5 bg-emerald-50/60 border border-emerald-200 rounded-xl">
+        <h3 class="font-bold text-emerald-900 mb-2 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Computed Output Metrics ({{ result.type }} Fit)
+        </h3>
+        <div class="grid grid-cols-2 gap-4 my-3 text-sm bg-white p-3 rounded-lg border border-emerald-100">
+            <div><span class="text-slate-500">Coefficient Matrix ( a ):</span> <strong class="text-slate-800 font-mono">{{ result.a }}</strong></div>
+            <div><span class="text-slate-500">Exponent Scaler Constant ( b ):</span> <strong class="text-slate-800 font-mono">{{ result.b }}</strong></div>
+        </div>
+        <div class="text-center bg-emerald-900 text-white p-4 rounded-lg font-mono tracking-wide mt-2">
+            <p class="text-xs uppercase tracking-widest opacity-60 mb-1">Resulting Formula Expression</p>
+            <div class="text-lg">
+                {% for eq in result.equations %}
+                    $${{ eq }}$$
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
